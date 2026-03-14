@@ -44,7 +44,7 @@ export function useQuiz() {
   const [sessionAnswers, setSessionAnswers] = useState([]); // per-question: { selectedKey, correctKey, options }
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
-  const [phase, setPhase] = useState('loading'); // loading | quiz | summary
+  const [phase, setPhase] = useState('loading'); // loading | home | quiz | summary
 
   useEffect(() => {
     const acc = loadAccuracy();
@@ -70,7 +70,7 @@ export function useQuiz() {
         const answers = sorted.map(() => null);
         setQuestions(sorted);
         setSessionAnswers(answers);
-        setPhase('quiz');
+        setPhase('home');
       },
     });
   }, []);
@@ -118,7 +118,7 @@ export function useQuiz() {
     if (currentIndex > 0) setCurrentIndex((i) => i - 1);
   }, [currentIndex]);
 
-  const restart = useCallback(() => {
+  const startQuiz = useCallback(() => {
     const acc = loadAccuracy();
     setAccuracy(acc);
     const sorted = weightedSort(questions, acc);
@@ -131,7 +131,14 @@ export function useQuiz() {
     setPhase('quiz');
   }, [questions]);
 
+  const goHome = useCallback(() => {
+    setPhase('home');
+  }, []);
+
   const answeredCount = sessionAnswers.filter((a) => a !== null).length;
+
+  // Unique questions seen across all sessions (from persisted accuracy)
+  const uniqueSeen = Object.keys(accuracy).length;
 
   return {
     phase,
@@ -142,9 +149,11 @@ export function useQuiz() {
     totalQuestions: questions.length,
     score,
     answeredCount,
+    uniqueSeen,
     submitAnswer,
     goNext,
     goBack,
-    restart,
+    startQuiz,
+    goHome,
   };
 }

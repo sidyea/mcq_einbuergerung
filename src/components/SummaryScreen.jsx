@@ -1,4 +1,4 @@
-export default function SummaryScreen({ score, total, onRestart }) {
+export default function SummaryScreen({ score, total, onRestart, onHome }) {
   const wrong = total - score;
   const pct = total > 0 ? Math.round((score / total) * 100) : 0;
 
@@ -23,9 +23,14 @@ export default function SummaryScreen({ score, total, onRestart }) {
       <p className="summary-hint">
         Questions you missed will appear more often next session.
       </p>
-      <button className="nav-btn next-btn restart-btn" onClick={onRestart}>
-        Start New Session
-      </button>
+      <div className="summary-actions">
+        <button className="nav-btn back-btn" onClick={onHome}>
+          ⌂ Home
+        </button>
+        <button className="nav-btn next-btn restart-btn" onClick={onRestart}>
+          New Session →
+        </button>
+      </div>
     </div>
   );
 }

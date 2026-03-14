@@ -1,5 +1,6 @@
 import { useQuiz } from './hooks/useQuiz';
 import { useTheme } from './hooks/useTheme';
+import HomeScreen from './components/HomeScreen';
 import QuestionCard from './components/QuestionCard';
 import SummaryScreen from './components/SummaryScreen';
 import './App.css';
@@ -15,10 +16,12 @@ export default function App() {
     totalQuestions,
     score,
     answeredCount,
+    uniqueSeen,
     submitAnswer,
     goNext,
     goBack,
-    restart,
+    startQuiz,
+    goHome,
   } = useQuiz();
 
   const toggleIcon = theme === 'forest' ? '🌙' : '🌿';
@@ -37,8 +40,12 @@ export default function App() {
           </div>
         )}
 
-        {phase === 'summary' && (
-          <SummaryScreen score={score} total={totalQuestions} onRestart={restart} />
+        {phase === 'home' && (
+          <HomeScreen
+            uniqueSeen={uniqueSeen}
+            totalQuestions={totalQuestions}
+            onStart={startQuiz}
+          />
         )}
 
         {phase === 'quiz' && (
@@ -53,7 +60,12 @@ export default function App() {
             onSelect={submitAnswer}
             onNext={goNext}
             onBack={goBack}
+            onHome={goHome}
           />
+        )}
+
+        {phase === 'summary' && (
+          <SummaryScreen score={score} total={totalQuestions} onRestart={startQuiz} onHome={goHome} />
         )}
       </div>
     </>

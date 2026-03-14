@@ -12,6 +12,7 @@ export default function QuestionCard({
   onSelect,
   onNext,
   onBack,
+  onHome,
 }) {
   const isAnswered = answer !== null;
 
@@ -29,8 +30,13 @@ export default function QuestionCard({
     <div className="card">
       <div className="card-header">
         <ProgressBar current={currentIndex + 1} total={totalQuestions} />
-        <div className="score-badge">
-          {score} / {answeredCount} correct
+        <div className="card-header-right">
+          <div className="score-badge">
+            {score} / {answeredCount} correct
+          </div>
+          <button className="home-btn" onClick={onHome} aria-label="Go to home screen">
+            ⌂
+          </button>
         </div>
       </div>
 
