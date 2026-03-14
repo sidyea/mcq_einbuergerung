@@ -50,7 +50,7 @@ export function useQuiz() {
     const acc = loadAccuracy();
     setAccuracy(acc);
 
-    Papa.parse('/questions.csv', {
+    Papa.parse(`${import.meta.env.BASE_URL}questions.csv`, {
       download: true,
       header: true,
       skipEmptyLines: true,
