@@ -1,10 +1,17 @@
 /* ── Reset & Base ─────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+html {
+  min-height: 100%;
+  /* Background on html so it paints behind the home indicator on iOS */
+  background: var(--bg-base, #e8ede4);
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
   min-height: 100svh;
+  background: var(--bg-base, #e8ede4);
 }
 
 /* ── Theme Tokens ─────────────────────────────────────── */
@@ -91,8 +98,7 @@ body {
   align-items: center;
   justify-content: center;
   padding: max(24px, env(safe-area-inset-top)) 16px max(24px, env(safe-area-inset-bottom));
-  background: var(--bg-base);
-  overflow: hidden;
+  background: transparent;
   position: relative;
   transition: background 0.5s ease;
 }
